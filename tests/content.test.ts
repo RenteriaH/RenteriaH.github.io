@@ -16,7 +16,9 @@ const caseFiles = ['es', 'en'].flatMap((lang) =>
 );
 const dataText = readFileSync(join(__dirname, '..', 'src', 'data', 'profile.ts'), 'utf8');
 const uiText = readFileSync(join(__dirname, '..', 'src', 'i18n', 'ui.ts'), 'utf8');
-const allPublicText = [dataText, uiText, ...caseFiles.map((c) => c.text)].join('\n');
+const cvText = readFileSync(join(__dirname, '..', 'src', 'data', 'cv.mjs'), 'utf8');
+const componentsText = readdirSync(join(__dirname, '..', 'src', 'components')).map((f) => readFileSync(join(__dirname, '..', 'src', 'components', f), 'utf8')).join('\n');
+const allPublicText = [dataText, uiText, cvText, componentsText, ...caseFiles.map((c) => c.text)].join('\n');
 
 describe('reglas de confidencialidad', () => {
   // Términos prohibidos (cifras internas, identificadores, sistemas de terceros, empresas sin constancia).

@@ -68,9 +68,10 @@ After the changes, all 13 tests pass.
 
 ## History matters too
 
-Deleting a file in a new commit doesn't remove it from history. I rewrote history with `git-filter-repo` in a separate
-copy, removing the dump, photos and key, and verified it by searching every commit for each pattern. The key gets
-revoked at the provider: removing it from code doesn't invalidate it.
+Deleting a file in a new commit doesn't remove it from history. I first rewrote history with `git-filter-repo`, but
+GitHub kept serving the old commits to anyone who knew their ID. So the public code lives in a
+[new repository](https://github.com/RenteriaH/GYMWARRIOR) with a single commit and no link to the old history, which stays
+private. Removing a key from code doesn't invalidate it either: only whoever issued it can do that.
 
 ## Screenshots
 

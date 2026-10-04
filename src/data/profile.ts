@@ -41,6 +41,8 @@ export interface Project {
   facts: L<string[]>;
   caseSlug?: string;
   repo?: string;
+  /** Código visible sin sesión. Solo true tras comprobarlo de forma anónima. */
+  public?: boolean;
 }
 
 export const projects: Project[] = [
@@ -197,7 +199,7 @@ export const projects: Project[] = [
 ];
 
 projects.unshift({
-  // Fuente: ~/work/Suplementos-web rama saneamiento (e2e 13/13). Repo privado hasta aprobar su publicación.
+  // Código público en un repositorio nuevo, sin el historial anterior (verificado sin sesión el 2026-10-04).
   id: 'gymwarrior',
   title: L_({ es: 'GYMWARRIOR — tienda en PHP y MySQL', en: 'GYMWARRIOR — PHP and MySQL store' }),
   oneLiner: L_({
@@ -216,14 +218,68 @@ projects.unshift({
     es: 'Desarrollo original en la escuela; saneamiento, pruebas y documentación en 2026 con asistencia de IA.',
     en: 'Original build at school; hardening, tests and documentation in 2026 with AI assistance.',
   }),
-  status: L_({ es: 'Saneado; pendiente de volver a publicarse', en: 'Hardened; pending re-publication' }),
+  status: L_({ es: 'Código público', en: 'Public code' }),
   stack: ['PHP', 'MySQL', 'JavaScript', 'Bootstrap', 'Playwright'],
   evidence: ['academic', 'verified'],
   caseSlug: 'saneamiento-gymwarrior',
+  repo: 'https://github.com/RenteriaH/GYMWARRIOR',
+  public: true,
   facts: L_({
     es: ['13 de 13 pruebas de punta a punta pasan (10 fallaban en la versión original)', 'Diez problemas de seguridad corregidos y documentados'],
     en: ['13 of 13 end-to-end tests pass (10 failed on the original)', 'Ten security issues fixed and documented'],
   }),
+});
+
+
+// Proyectos con código público (verificado sin sesión el 2026-10-04).
+projects.splice(1, 0, {
+  id: 'portfolio',
+  title: L_({ es: 'Portafolio profesional', en: 'Professional portfolio' }),
+  oneLiner: L_({
+    es: 'Este sitio: bilingüe, estático y con pruebas en cada cambio.',
+    en: 'This site: bilingual, static and tested on every change.',
+  }),
+  problem: L_({
+    es: 'Presentar trabajo real sin exponer sistemas privados ni datos de la empresa.',
+    en: 'Showing real work without exposing private systems or company data.',
+  }),
+  solution: L_({
+    es: 'Astro con contenido tipado, una prueba que bloquea términos confidenciales, pruebas e2e en tres anchos y despliegue continuo en GitHub Pages.',
+    en: 'Astro with typed content, a test that blocks confidential terms, end-to-end tests at three widths and continuous deployment to GitHub Pages.',
+  }),
+  role: L_({ es: 'Diseño, contenido y revisión; código escrito con agentes de IA.', en: 'Design, content and review; code written with AI agents.' }),
+  status: L_({ es: 'En producción', en: 'Live' }),
+  stack: ['Astro', 'TypeScript', 'Vitest', 'Playwright', 'GitHub Actions'],
+  evidence: ['verified', 'ai'],
+  repo: 'https://github.com/RenteriaH/RenteriaH.github.io',
+  public: true,
+  facts: L_({
+    es: ['Lighthouse 100 en accesibilidad y SEO', 'Rendimiento móvil 99–100 (mediana de 3)'],
+    en: ['Lighthouse 100 for accessibility and SEO', 'Mobile performance 99–100 (median of 3)'],
+  }),
+});
+projects.push({
+  id: 'racing',
+  title: L_({ es: 'Simulador de carreras 2D', en: '2D racing simulator' }),
+  oneLiner: L_({
+    es: 'Juego en Python con pistas generadas a partir de imágenes y colisiones por máscara.',
+    en: 'Python game with tracks generated from images and mask-based collisions.',
+  }),
+  problem: L_({
+    es: 'Detectar con precisión cuándo un coche sale de una pista de forma irregular.',
+    en: 'Detecting precisely when a car leaves an irregularly shaped track.',
+  }),
+  solution: L_({
+    es: 'Máscaras de píxeles para las colisiones y sensores de distancia para el coche.',
+    en: 'Pixel masks for collisions and distance sensors for the car.',
+  }),
+  role: L_({ es: 'Proyecto académico propio.', en: 'Own coursework project.' }),
+  status: L_({ es: 'Código público con instrucciones', en: 'Public code with instructions' }),
+  stack: ['Python', 'pygame', 'NumPy', 'SciPy'],
+  evidence: ['academic'],
+  repo: 'https://github.com/RenteriaH/VIDEOGAME_CARRERA',
+  public: true,
+  facts: L_({ es: [], en: [] }),
 });
 
 export interface Job {
@@ -240,7 +296,7 @@ export const experience: Job[] = [
   {
     org: 'MAHA Home de México',
     title: L_({ es: 'Desarrollador de software · Residencia profesional', en: 'Software Developer · Professional internship' }),
-    period: L_({ es: 'Jul 2026 – Nov 2026', en: 'Jul 2026 – Nov 2026' }),
+    period: L_({ es: 'Jul 2026 – actualidad', en: 'Jul 2026 – Present' }),
     place: L_({ es: 'Torreón, Coahuila', en: 'Torreón, Mexico' }),
     // Solo funciones del puesto. Sin procesos internos, cifras, incidentes ni arquitectura de la empresa.
     bullets: L_({

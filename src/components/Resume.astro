@@ -1,111 +1,81 @@
 ---
 /**
- * CV en una columna, texto seleccionable, secciones convencionales (compatible con ATS).
- * La misma página genera el PDF con scripts/build-cv.mjs (impresión de Playwright).
+ * CV en HTML: misma fuente que los PDF (src/data/cv.mjs), versión principal A (Software Engineer).
+ * Una columna, texto seleccionable y secciones convencionales.
  */
-import { person, experience, education, projects } from '../data/profile';
 import type { Locale } from '../i18n/ui';
+import * as cv from '../data/cv.mjs';
+
+type Txt = Record<Locale, string>;
+type CvProject = { name: string | Txt; tag: Txt; stack: string; link?: (l: Locale) => { label: string; href: string }; bullets: Record<Locale, string[]> };
+const { variants, links, t: T } = cv;
+const maha = cv.maha as Record<string, Txt>;
+const projects = cv.projects as Record<string, CvProject>;
+const skills = cv.skills as Record<string, Txt>;
 
 interface Props {
   lang: Locale;
+  variant?: 'A' | 'B' | 'C' | 'D' | 'E';
 }
-const { lang } = Astro.props;
-const es = lang === 'es';
-
-const summary = es
-  ? 'Estudiante de Ingeniería en Sistemas Computacionales con experiencia en desarrollo web sobre una tienda Shopify Plus en producción: interfaces en Liquid, HTML, CSS y JavaScript, integración de APIs REST y GraphQL, modelado de datos y rendimiento web. En proyectos propios trabajo con Python, TypeScript y Node.js, pruebas automatizadas y despliegue en Linux, dirigiendo agentes de IA con revisión y verificación de cada cambio.'
-  : 'Computer Systems Engineering student with web development experience on a production Shopify Plus store: Liquid, HTML, CSS and JavaScript interfaces, REST and GraphQL API integration, data modeling and web performance. In my own projects I work with Python, TypeScript and Node.js, automated tests and Linux deployment, directing AI agents and reviewing and verifying every change.';
-
-const cvProjects = ['gymwarrior', 'qce', 'ecomos'].map((id) => projects.find((p) => p.id === id)!).filter(Boolean);
-
-const skillLines = es
-  ? [
-      ['Lenguajes', 'JavaScript, TypeScript, Python, HTML, CSS, Liquid, SQL, PowerShell'],
-      ['APIs e integración', 'GraphQL, REST, OAuth (client credentials), operaciones masivas, control de concurrencia, límites de tasa, MCP'],
-      ['Backend y operación', 'Node.js, FastAPI, Linux, systemd, Docker, Git, GitHub Actions'],
-      ['Pruebas y calidad', 'pytest, Vitest, Playwright, regresión visual, Core Web Vitals, contraste WCAG'],
-      ['Datos', 'Modelado con restricciones, auditoría y reconciliación, JSON/JSONL/CSV, SQLite'],
-      ['Idiomas', 'Español (nativo) · Inglés (en desarrollo)'],
-    ]
-  : [
-      ['Languages', 'JavaScript, TypeScript, Python, HTML, CSS, Liquid, SQL, PowerShell'],
-      ['APIs & integration', 'GraphQL, REST, OAuth (client credentials), bulk operations, concurrency control, rate limits, MCP'],
-      ['Backend & operations', 'Node.js, FastAPI, Linux, systemd, Docker, Git, GitHub Actions'],
-      ['Testing & quality', 'pytest, Vitest, Playwright, visual regression, Core Web Vitals, WCAG contrast'],
-      ['Data', 'Constraint-aware modeling, auditing and reconciliation, JSON/JSONL/CSV, SQLite'],
-      ['Languages', 'Spanish (native) · English (developing)'],
-    ];
+const { lang, variant = 'A' } = Astro.props;
+const v = variants[variant];
+const L = T[lang];
+const pick = (x: string | Txt) => (typeof x === 'string' ? x : x[lang]);
+const bare = (u: string) => u.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---
 
 <article class="cv">
   <header class="cv__head">
-    <h1>{person.name}</h1>
-    <p class="cv__title">{es ? 'Desarrollador de software · Integraciones, APIs y automatización' : 'Software Developer · Integrations, APIs & Automation'}</p>
+    <p class="cv__name">Guillermo Rentería Hernández</p>
+    <p class="cv__title">{v.headline[lang]}</p>
     <p class="cv__contact">
-      {person.location[lang]}
-      {person.email && <> · {person.email}</>}
-      {' · '}github.com/RenteriaH · linkedin.com/in/guillermo-renteria-9263052a6
+      {L.location} · <a href={links.portfolio[lang]}>renteriah.github.io</a> · <a href={links.github}>{bare(links.github)}</a> ·
+      <a href={links.linkedin}>{bare(links.linkedin)}</a>
     </p>
   </header>
 
-  <section>
-    <h2>{es ? 'Perfil' : 'Summary'}</h2>
-    <p>{summary}</p>
-  </section>
+  <section><h2>{L.h.summary}</h2><p>{v.summary[lang]}</p></section>
 
   <section>
-    <h2>{es ? 'Experiencia' : 'Experience'}</h2>
-    {
-      experience.map((job) => (
-        <div class="cv__item">
-          <h3>
-            {job.title[lang]} — {job.org}
-          </h3>
-          <p class="cv__meta">
-            {job.place[lang]} · {job.period[lang]}
-          </p>
-          <ul>
-            {job.bullets[lang].slice(1).map((b) => <li>{b}</li>)}
-          </ul>
-        </div>
-      ))
-    }
-  </section>
-
-  <section>
-    <h2>{es ? 'Proyectos' : 'Projects'}</h2>
-    {
-      cvProjects.map((p) => (
-        <div class="cv__item">
-          <h3>{p.title[lang]}</h3>
-          <p class="cv__meta">{p.stack.slice(0, 6).join(', ')}</p>
-          <p class="cv__proj">{p.oneLiner[lang]} {p.role[lang]}</p>
-        </div>
-      ))
-    }
-  </section>
-
-  <section>
-    <h2>{es ? 'Educación' : 'Education'}</h2>
-    {
-      education.map((e) => (
-        <div class="cv__item">
-          <h3>{e.degree[lang]}</h3>
-          <p class="cv__meta">
-            {e.school} · {e.period[lang]}
-          </p>
-        </div>
-      ))
-    }
-  </section>
-
-  <section>
-    <h2>{es ? 'Habilidades' : 'Skills'}</h2>
+    <h2>{L.h.skills}</h2>
     <ul class="cv__skills">
-      {skillLines.map(([k, v]) => <li><strong>{k}:</strong> {v}</li>)}
+      {(v.skills as string[][]).map(([k, s]) => <li><strong>{skills[k][lang]}:</strong> {s}</li>)}
     </ul>
   </section>
 
+  <section>
+    <h2>{L.h.exp}</h2>
+    <div class="cv__item">
+      <div class="cv__row"><h3>{L.job.title} — {L.job.org}</h3><span>{L.job.period}</span></div>
+      <p class="cv__meta">{L.job.meta}</p>
+      <ul>{v.maha.map((k: string) => <li>{maha[k][lang]}</li>)}</ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>{L.h.proj}</h2>
+    {
+      v.projects.map((id: string) => {
+        const p = projects[id];
+        const link = p.link?.(lang);
+        return (
+          <div class="cv__item">
+            <div class="cv__row">
+              <h3>{pick(p.name)} <span class="cv__tag">— {p.tag[lang]}</span></h3>
+              {link && <a href={link.href}>{link.label}</a>}
+            </div>
+            <p class="cv__meta">{p.stack}</p>
+            <ul>{p.bullets[lang].map((b: string) => <li>{b}</li>)}</ul>
+          </div>
+        );
+      })
+    }
+  </section>
+
+  <section>
+    <h2>{L.h.edu}</h2>
+    {L.edu.map(([d, s, p]: string[]) => <div class="cv__row"><p><strong>{d}</strong> — {s}</p><span>{p}</span></div>)}
+  </section>
 </article>
 
 <style>
@@ -125,13 +95,13 @@ const skillLines = es
     font-size: 0.98rem;
     line-height: 1.45;
   }
-  .cv h1 {
+  .cv .cv__name {
+    font-weight: 700;
     font-size: 1.9rem;
     margin: 0;
   }
   .cv__title {
-    font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     margin: 0.25rem 0;
   }
   .cv__contact,
@@ -162,6 +132,24 @@ const skillLines = es
   .cv__proj {
     margin: 0.15rem 0 0;
   }
+  .cv__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0 1rem;
+  }
+  .cv__row p {
+    margin: 0.15rem 0;
+  }
+  .cv__row > span,
+  .cv__row > a {
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+  .cv__tag {
+    font-weight: 400;
+  }
   .cv__skills {
     list-style: none;
     padding-left: 0 !important;
@@ -174,7 +162,8 @@ const skillLines = es
       font-size: 9.1pt;
       line-height: 1.28;
     }
-    .cv h1 { font-size: 17pt; }
+    .cv .cv__name {
+    font-weight: 700; font-size: 17pt; }
     .cv h2 { margin: 0.8rem 0 0.35rem; }
     .cv h3 { margin: 0.45rem 0 0.05rem; }
   }

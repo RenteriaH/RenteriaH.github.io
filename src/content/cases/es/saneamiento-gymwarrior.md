@@ -71,9 +71,10 @@ Después de los cambios, las 13 pruebas pasan.
 
 ## El historial también cuenta
 
-Borrar un archivo en un commit nuevo no lo quita del historial. Reescribí el historial con `git-filter-repo` en una
-copia aparte, quitando el volcado, las fotos y la clave, y lo verifiqué buscando cada patrón en todos los commits. La
-clave se revoca en el proveedor: limpiarla del código no la invalida.
+Borrar un archivo en un commit nuevo no lo quita del historial. Primero reescribí el historial con `git-filter-repo`,
+pero GitHub seguía sirviendo los commits antiguos a quien conociera su identificador. Por eso el código público vive en un
+[repositorio nuevo](https://github.com/RenteriaH/GYMWARRIOR) con un único commit, sin relación con el historial anterior, que
+sigue privado. Quitar una clave del código tampoco la invalida: eso solo puede hacerlo quien la emitió.
 
 ## Capturas
 

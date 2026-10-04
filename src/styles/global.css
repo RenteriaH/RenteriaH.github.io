@@ -1,58 +1,64 @@
 /* Tokens. Se adaptan al tema del sistema; no hay colores definidos solo en modo oscuro. */
 :root {
-  --ground: #eef2f5;
+  --ground: #f6f5f1;
   --surface: #ffffff;
-  --ink: #13212e;
-  --muted: #4f5e6b;
-  --rule: #d3dbe2;
-  --link: #2445c9;
+  --ink: #12161b;
+  --muted: #59626c;
+  --rule: #e1dfd8;
+  --link: #1f5f52;
   --verified: #0b6e5b;
   --lab: #85560a;
   --ai: #6a3fa0;
-  --focus: #2445c9;
+  --focus: #0b6e5b;
+  --accent: #0b6e5b;
 
-  --font-display: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-ui: var(--font-body);
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   --step--1: clamp(0.82rem, 0.8rem + 0.1vw, 0.88rem);
-  --step-0: clamp(1.02rem, 0.98rem + 0.2vw, 1.12rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.075rem);
   --step-1: clamp(1.22rem, 1.12rem + 0.45vw, 1.45rem);
-  --step-2: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
-  --step-3: clamp(2rem, 1.55rem + 2.1vw, 3.35rem);
+  --step-2: clamp(1.9rem, 1.5rem + 1.6vw, 2.9rem);
+  --step-3: clamp(2.6rem, 1.7rem + 4vw, 4.75rem);
+  --step-4: clamp(2.9rem, 1.9rem + 4.6vw, 5.25rem);
 
   --measure: 68ch;
   --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
-  --radius: 6px;
+  --radius: 14px;
+  --radius-lg: 22px;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --ground: #0d141b;
-    --surface: #141d26;
-    --ink: #e3e9ef;
-    --muted: #9ba9b5;
-    --rule: #27333f;
-    --link: #93abff;
-    --verified: #4ec8ad;
+    --ground: #0d1014;
+    --surface: #141920;
+    --ink: #eef0f2;
+    --muted: #97a0ab;
+    --rule: #232a33;
+    --link: #7fe0c6;
+    --verified: #5fd4b6;
     --lab: #e2b35c;
     --ai: #c4a6f0;
-    --focus: #93abff;
+    --focus: #7fe0c6;
+    --accent: #5fd4b6;
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --ground: #0d141b;
-  --surface: #141d26;
-  --ink: #e3e9ef;
-  --muted: #9ba9b5;
-  --rule: #27333f;
-  --link: #93abff;
-  --verified: #4ec8ad;
+  --ground: #0d1014;
+  --surface: #141920;
+  --ink: #eef0f2;
+  --muted: #97a0ab;
+  --rule: #232a33;
+  --link: #7fe0c6;
+  --verified: #5fd4b6;
   --lab: #e2b35c;
   --ai: #c4a6f0;
-  --focus: #93abff;
+  --focus: #7fe0c6;
+  --accent: #5fd4b6;
   color-scheme: dark;
 }
 
@@ -87,22 +93,24 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  line-height: 1.12;
-  letter-spacing: -0.015em;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 400;
   text-wrap: balance;
   margin: 0 0 0.5em;
 }
 h1 {
   font-size: var(--step-3);
-  font-weight: 700;
 }
 h2 {
   font-size: var(--step-2);
-  font-weight: 650;
 }
 h3 {
   font-size: var(--step-1);
-  font-weight: 620;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
 p {
@@ -219,20 +227,33 @@ code {
   gap: 0.5rem;
   min-height: 44px;
   padding: 0.55rem 1.1rem;
-  font-family: var(--font-display);
-  font-weight: 600;
+  font-family: var(--font-ui);
+  font-weight: 500;
   font-size: var(--step-0);
-  border-radius: var(--radius);
-  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  transition: background-color 0.2s, border-color 0.2s;
   color: var(--ink);
   text-decoration: none;
 }
 .btn--primary {
   background: var(--ink);
+  border-color: var(--ink);
   color: var(--ground);
 }
 .btn:hover {
-  text-decoration: underline;
+  border-color: var(--accent);
+}
+.btn--primary:hover {
+  background: color-mix(in srgb, var(--ink) 86%, var(--accent));
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
 }
 
 /* Prosa de casos de estudio */
@@ -335,4 +356,28 @@ code {
   font-size: var(--step--1);
   color: var(--muted);
   margin-top: 0.4rem;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: var(--step--1);
+  display: block;
+  overflow-x: auto;
+}
+.prose th,
+.prose td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.9rem 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.prose th {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
 }

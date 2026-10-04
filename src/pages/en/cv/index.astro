@@ -1,13 +1,13 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Resume from '../../../components/Resume.astro';
+import CvDownloads from '../../../components/CvDownloads.astro';
 import { t } from '../../../layouts/../i18n/ui';
-const pdf = '/cv/Guillermo_Renteria_CV_EN.pdf';
 ---
 
 <Base lang="en" path="/cv/" title={t('en', 'cv.title')}>
   <div class="wrap cv-page">
-    <p class="cv-page__bar"><a class="btn" href={pdf}>{t('en', 'cv.download')}</a></p>
+    <CvDownloads lang="en" />
     <Resume lang="en" />
   </div>
 </Base>

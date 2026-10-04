@@ -1,0 +1,121 @@
+---
+/**
+ * Descargas del CV: la versión principal (Software Engineer) como única acción destacada;
+ * las otras cuatro especializaciones en una lista secundaria, cada una en los dos idiomas.
+ */
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const es = lang === 'es';
+const file = (l: 'ES' | 'EN', slug: string) => `/cv/Guillermo_Renteria_CV_${l}_${slug}.pdf`;
+const own = es ? 'ES' : 'EN';
+const otherLang = es ? 'EN' : 'ES';
+
+const versions = [
+  { slug: 'B_Full_Stack', name: 'Full Stack', es: 'Frontend y backend, APIs, bases de datos.', en: 'Frontend and backend, APIs, databases.' },
+  { slug: 'C_Backend', name: 'Backend', es: 'Python, Node.js, PHP, datos y pruebas.', en: 'Python, Node.js, PHP, data and testing.' },
+  { slug: 'D_Frontend_Web', name: 'Frontend / Web', es: 'HTML, CSS, TypeScript, Astro, Liquid, accesibilidad y rendimiento.', en: 'HTML, CSS, TypeScript, Astro, Liquid, accessibility and performance.' },
+  { slug: 'E_Automation_Integrations', name: es ? 'Automatización e integraciones' : 'Automation & Integrations', es: 'APIs REST y GraphQL, automatización y agentes de IA.', en: 'REST and GraphQL APIs, automation and AI agents.' },
+];
+---
+
+<section class="dl" aria-labelledby="dl-title">
+  <div class="dl__main">
+    <p class="eyebrow">{es ? 'Versión principal' : 'Main version'}</p>
+    <h1 id="dl-title">{es ? 'Currículum · Software Engineer' : 'Résumé · Software Engineer'}</h1>
+    <p class="muted">{es ? 'Una página, una columna, texto seleccionable. Debajo puedes leerlo completo.' : 'One page, one column, selectable text. You can read it in full below.'}</p>
+    <p class="dl__actions">
+      <a class="btn btn--primary" href={file(own, 'A_Software_Engineer')} download>{es ? 'Descargar PDF' : 'Download PDF'}</a>
+      <a class="btn" href={file(otherLang, 'A_Software_Engineer')} download hreflang={otherLang.toLowerCase()}>{es ? 'English version' : 'Versión en español'}</a>
+    </p>
+  </div>
+  <details class="dl__more">
+    <summary>{es ? 'Versiones por especialidad' : 'Versions by specialization'}</summary>
+    <p class="muted dl__note">{es ? 'Mismos hechos; cambian el orden y los proyectos destacados.' : 'Same facts; the order and the highlighted projects change.'}</p>
+    <ul>
+      {
+        versions.map((v) => (
+          <li>
+            <div>
+              <strong>{v.name}</strong>
+              <span class="muted">{v[lang]}</span>
+            </div>
+            <span class="dl__files mono">
+              <a href={file('ES', v.slug)} download hreflang="es">PDF ES</a>
+              <a href={file('EN', v.slug)} download hreflang="en">PDF EN</a>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+</section>
+
+<style>
+  .dl {
+    max-width: 50rem;
+    margin: 0 auto 2.5rem;
+  }
+  .dl h1 {
+    font-size: var(--step-2);
+    margin: 0.75rem 0 0.5rem;
+  }
+  .dl__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+  .dl__more {
+    margin-top: 2rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .dl__more summary {
+    cursor: pointer;
+    padding: 1rem 1.25rem;
+    font-weight: 500;
+  }
+  .dl__note {
+    margin: 0 1.25rem 0.5rem;
+    font-size: var(--step--1);
+  }
+  .dl__more ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 1.25rem 0.75rem;
+  }
+  .dl__more li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    padding-block: 0.8rem;
+    border-top: 1px solid var(--rule);
+  }
+  .dl__more li div {
+    display: flex;
+    flex-direction: column;
+  }
+  .dl__more li .muted {
+    font-size: var(--step--1);
+  }
+  .dl__files {
+    display: flex;
+    gap: 1rem;
+  }
+  .dl__files a {
+    display: inline-block;
+    padding-block: 0.5rem;
+  }
+  @media print {
+    .dl {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import Resume from '../../components/Resume.astro';
+import { t } from '../../layouts/../i18n/ui';
+const pdf = '/cv/Guillermo_Renteria_CV_ES.pdf';
+---
+
+<Base lang="es" path="/cv/" title={t('es', 'cv.title')}>
+  <div class="wrap cv-page">
+    <p class="cv-page__bar"><a class="btn" href={pdf}>{t('es', 'cv.download')}</a></p>
+    <Resume lang="es" />
+  </div>
+</Base>
+
+<style>
+  .cv-page {
+    padding-block: 2rem 4rem;
+  }
+  .cv-page__bar {
+    max-width: 50rem;
+    margin: 0 auto 1rem;
+  }
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.skip),
+    .cv-page__bar {
+      display: none !important;
+    }
+    .cv-page {
+      padding: 0;
+    }
+  }
+</style>

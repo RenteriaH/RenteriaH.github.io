@@ -1,0 +1,181 @@
+---
+/**
+ * CV en una columna, texto seleccionable, secciones convencionales (compatible con ATS).
+ * La misma página genera el PDF con scripts/build-cv.mjs (impresión de Playwright).
+ */
+import { person, experience, education, projects } from '../data/profile';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const es = lang === 'es';
+
+const summary = es
+  ? 'Estudiante de Ingeniería en Sistemas Computacionales con experiencia en desarrollo web sobre una tienda Shopify Plus en producción: interfaces en Liquid, HTML, CSS y JavaScript, integración de APIs REST y GraphQL, modelado de datos y rendimiento web. En proyectos propios trabajo con Python, TypeScript y Node.js, pruebas automatizadas y despliegue en Linux, dirigiendo agentes de IA con revisión y verificación de cada cambio.'
+  : 'Computer Systems Engineering student with web development experience on a production Shopify Plus store: Liquid, HTML, CSS and JavaScript interfaces, REST and GraphQL API integration, data modeling and web performance. In my own projects I work with Python, TypeScript and Node.js, automated tests and Linux deployment, directing AI agents and reviewing and verifying every change.';
+
+const cvProjects = ['gymwarrior', 'qce', 'ecomos'].map((id) => projects.find((p) => p.id === id)!).filter(Boolean);
+
+const skillLines = es
+  ? [
+      ['Lenguajes', 'JavaScript, TypeScript, Python, HTML, CSS, Liquid, SQL, PowerShell'],
+      ['APIs e integración', 'GraphQL, REST, OAuth (client credentials), operaciones masivas, control de concurrencia, límites de tasa, MCP'],
+      ['Backend y operación', 'Node.js, FastAPI, Linux, systemd, Docker, Git, GitHub Actions'],
+      ['Pruebas y calidad', 'pytest, Vitest, Playwright, regresión visual, Core Web Vitals, contraste WCAG'],
+      ['Datos', 'Modelado con restricciones, auditoría y reconciliación, JSON/JSONL/CSV, SQLite'],
+      ['Idiomas', 'Español (nativo) · Inglés (en desarrollo)'],
+    ]
+  : [
+      ['Languages', 'JavaScript, TypeScript, Python, HTML, CSS, Liquid, SQL, PowerShell'],
+      ['APIs & integration', 'GraphQL, REST, OAuth (client credentials), bulk operations, concurrency control, rate limits, MCP'],
+      ['Backend & operations', 'Node.js, FastAPI, Linux, systemd, Docker, Git, GitHub Actions'],
+      ['Testing & quality', 'pytest, Vitest, Playwright, visual regression, Core Web Vitals, WCAG contrast'],
+      ['Data', 'Constraint-aware modeling, auditing and reconciliation, JSON/JSONL/CSV, SQLite'],
+      ['Languages', 'Spanish (native) · English (developing)'],
+    ];
+---
+
+<article class="cv">
+  <header class="cv__head">
+    <h1>{person.name}</h1>
+    <p class="cv__title">{es ? 'Desarrollador de software · Integraciones, APIs y automatización' : 'Software Developer · Integrations, APIs & Automation'}</p>
+    <p class="cv__contact">
+      {person.location[lang]}
+      {person.email && <> · {person.email}</>}
+      {' · '}github.com/RenteriaH · linkedin.com/in/guillermo-renteria-9263052a6
+    </p>
+  </header>
+
+  <section>
+    <h2>{es ? 'Perfil' : 'Summary'}</h2>
+    <p>{summary}</p>
+  </section>
+
+  <section>
+    <h2>{es ? 'Experiencia' : 'Experience'}</h2>
+    {
+      experience.map((job) => (
+        <div class="cv__item">
+          <h3>
+            {job.title[lang]} — {job.org}
+          </h3>
+          <p class="cv__meta">
+            {job.place[lang]} · {job.period[lang]}
+          </p>
+          <ul>
+            {job.bullets[lang].slice(1).map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>{es ? 'Proyectos' : 'Projects'}</h2>
+    {
+      cvProjects.map((p) => (
+        <div class="cv__item">
+          <h3>{p.title[lang]}</h3>
+          <p class="cv__meta">{p.stack.slice(0, 6).join(', ')}</p>
+          <p class="cv__proj">{p.oneLiner[lang]} {p.role[lang]}</p>
+        </div>
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>{es ? 'Educación' : 'Education'}</h2>
+    {
+      education.map((e) => (
+        <div class="cv__item">
+          <h3>{e.degree[lang]}</h3>
+          <p class="cv__meta">
+            {e.school} · {e.period[lang]}
+          </p>
+        </div>
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>{es ? 'Habilidades' : 'Skills'}</h2>
+    <ul class="cv__skills">
+      {skillLines.map(([k, v]) => <li><strong>{k}:</strong> {v}</li>)}
+    </ul>
+  </section>
+
+</article>
+
+<style>
+  .cv,
+  .cv * {
+    font-family: Arial, Helvetica, sans-serif !important;
+    letter-spacing: normal !important;
+    text-wrap: wrap !important;
+  }
+  .cv {
+    max-width: 50rem;
+    margin-inline: auto;
+    background: var(--surface);
+    color: var(--ink);
+    padding: clamp(1.25rem, 1rem + 2vw, 3rem);
+    border: 1px solid var(--rule);
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+  .cv h1 {
+    font-size: 1.9rem;
+    margin: 0;
+  }
+  .cv__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin: 0.25rem 0;
+  }
+  .cv__contact,
+  .cv__meta {
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin: 0 0 0.3rem;
+  }
+  .cv h2 {
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.2rem;
+    margin: 1.3rem 0 0.6rem;
+  }
+  .cv h3 {
+    font-size: 1rem;
+    margin: 0.7rem 0 0.1rem;
+  }
+  .cv ul {
+    margin: 0.2rem 0 0;
+    padding-left: 1.1rem;
+  }
+  .cv li + li {
+    margin-top: 0.15rem;
+  }
+  .cv__proj {
+    margin: 0.15rem 0 0;
+  }
+  .cv__skills {
+    list-style: none;
+    padding-left: 0 !important;
+  }
+  @media print {
+    .cv {
+      border: 0;
+      padding: 0;
+      max-width: none;
+      font-size: 9.1pt;
+      line-height: 1.28;
+    }
+    .cv h1 { font-size: 17pt; }
+    .cv h2 { margin: 0.8rem 0 0.35rem; }
+    .cv h3 { margin: 0.45rem 0 0.05rem; }
+  }
+</style>

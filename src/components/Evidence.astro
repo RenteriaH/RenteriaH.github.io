@@ -1,0 +1,50 @@
+---
+import { evidenceLabel, type Evidence } from '../data/profile';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  kinds: Evidence[];
+}
+const { lang, kinds } = Astro.props;
+---
+
+<ul class="evidence" aria-label={lang === 'es' ? 'Origen de la evidencia' : 'Evidence source'}>
+  {kinds.map((k) => <li class={`evidence__tag evidence__tag--${k}`}>{evidenceLabel[lang][k]}</li>)}
+</ul>
+
+<style>
+  .evidence {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .evidence__tag {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.1rem 0.45rem;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    line-height: 1.5;
+  }
+  .evidence__tag::before {
+    content: '';
+    display: inline-block;
+    width: 0.45em;
+    height: 0.45em;
+    margin-right: 0.4em;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: 0.08em;
+  }
+  .evidence__tag--verified { color: var(--verified); }
+  .evidence__tag--lab { color: var(--lab); }
+  .evidence__tag--ai { color: var(--ai); }
+  .evidence__tag--academic,
+  .evidence__tag--private { color: var(--muted); }
+</style>

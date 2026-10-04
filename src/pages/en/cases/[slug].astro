@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import CaseStudy from '../../../components/CaseStudy.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('cases', (e) => e.filePath?.includes('/cases/en/') ?? false);
+  return entries.map((entry) => ({ params: { slug: entry.data.key }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const slug = entry.data.key;
+---
+
+<Base lang="en" path={`/cases/${slug}/`} altPath={`/casos/${slug}/`} title={entry.data.seoTitle} description={entry.data.seoDescription} type="article">
+  <CaseStudy lang="en" entry={entry} />
+</Base>

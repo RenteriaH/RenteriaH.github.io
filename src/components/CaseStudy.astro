@@ -1,0 +1,65 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import { t, localePath, type Locale } from '../i18n/ui';
+
+interface Props {
+  lang: Locale;
+  entry: CollectionEntry<'cases'>;
+}
+const { lang, entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+
+<article class="wrap case">
+  <p class="mono"><a href={localePath(lang, '/')}>← {t(lang, 'case.back')}</a></p>
+  <header class="case__head">
+    <h1>{d.title}</h1>
+    <p class="case__summary">{d.summary}</p>
+    <dl class="case__meta">
+      <div><dt>{t(lang, 'case.role')}</dt><dd>{d.role} · {d.org}</dd></div>
+      <div><dt>{t(lang, 'case.period')}</dt><dd>{d.period}</dd></div>
+      <div>
+        <dt>{t(lang, 'case.stack')}</dt>
+        <dd><ul class="chips">{d.stack.map((s) => <li>{s}</li>)}</ul></dd>
+      </div>
+    </dl>
+  </header>
+  <div class="prose">
+    <Content />
+  </div>
+</article>
+
+<style>
+  .case {
+    padding-block: clamp(2rem, 1.5rem + 3vw, 4rem);
+  }
+  .case__head {
+    max-width: var(--measure);
+    margin-bottom: 2rem;
+  }
+  .case__head h1 {
+    margin-top: 1rem;
+  }
+  .case__summary {
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .case__meta {
+    display: grid;
+    gap: 0.8rem;
+    margin: 1.5rem 0 0;
+    padding: 1rem 0;
+    border-block: 1px solid var(--rule);
+  }
+  .case__meta dt {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+  .case__meta dd {
+    margin: 0.2rem 0 0;
+  }
+</style>

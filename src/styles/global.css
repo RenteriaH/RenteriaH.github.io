@@ -1,0 +1,338 @@
+/* Tokens. Se adaptan al tema del sistema; no hay colores definidos solo en modo oscuro. */
+:root {
+  --ground: #eef2f5;
+  --surface: #ffffff;
+  --ink: #13212e;
+  --muted: #4f5e6b;
+  --rule: #d3dbe2;
+  --link: #2445c9;
+  --verified: #0b6e5b;
+  --lab: #85560a;
+  --ai: #6a3fa0;
+  --focus: #2445c9;
+
+  --font-display: 'Schibsted Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --step--1: clamp(0.82rem, 0.8rem + 0.1vw, 0.88rem);
+  --step-0: clamp(1.02rem, 0.98rem + 0.2vw, 1.12rem);
+  --step-1: clamp(1.22rem, 1.12rem + 0.45vw, 1.45rem);
+  --step-2: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  --step-3: clamp(2rem, 1.55rem + 2.1vw, 3.35rem);
+
+  --measure: 68ch;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --radius: 6px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --ground: #0d141b;
+    --surface: #141d26;
+    --ink: #e3e9ef;
+    --muted: #9ba9b5;
+    --rule: #27333f;
+    --link: #93abff;
+    --verified: #4ec8ad;
+    --lab: #e2b35c;
+    --ai: #c4a6f0;
+    --focus: #93abff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --ground: #0d141b;
+  --surface: #141d26;
+  --ink: #e3e9ef;
+  --muted: #9ba9b5;
+  --rule: #27333f;
+  --link: #93abff;
+  --verified: #4ec8ad;
+  --lab: #e2b35c;
+  --ai: #c4a6f0;
+  --focus: #93abff;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin: 0 0 0.5em;
+}
+h1 {
+  font-size: var(--step-3);
+  font-weight: 700;
+}
+h2 {
+  font-size: var(--step-2);
+  font-weight: 650;
+}
+h3 {
+  font-size: var(--step-1);
+  font-weight: 620;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: color-mix(in srgb, var(--rule) 45%, transparent);
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.01em;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -10rem;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0.5rem 0.9rem;
+  border: 2px solid var(--focus);
+  z-index: 10;
+}
+.skip:focus {
+  top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
+}
+
+/* Sección con riel: la etiqueta de la izquierda nombra la sección. */
+.section {
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(2.5rem, 2rem + 3vw, 5rem);
+}
+.section__grid {
+  display: grid;
+  gap: 1.25rem 3rem;
+}
+@media (min-width: 60rem) {
+  .section__grid {
+    grid-template-columns: 13rem minmax(0, 1fr);
+  }
+}
+.section__label {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0;
+  padding-top: 0.45rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.chips li {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 0.12rem 0.6rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--step-0);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+}
+.btn--primary {
+  background: var(--ink);
+  color: var(--ground);
+}
+.btn:hover {
+  text-decoration: underline;
+}
+
+/* Prosa de casos de estudio */
+.prose {
+  max-width: var(--measure);
+}
+.prose h2 {
+  margin-top: 2.2em;
+}
+.prose h3 {
+  margin-top: 1.6em;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+}
+.prose li + li {
+  margin-top: 0.35em;
+}
+.prose blockquote {
+  margin: 1.5em 0;
+  padding: 0.8em 1em;
+  border-left: 3px solid var(--verified);
+  background: var(--surface);
+  font-size: var(--step--1);
+  font-family: var(--font-mono);
+}
+.prose blockquote p {
+  margin: 0;
+}
+
+.diagram {
+  margin: 2rem 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1rem;
+  overflow-x: auto;
+}
+.diagram svg {
+  display: block;
+  min-width: 520px;
+  width: 100%;
+}
+.diagram rect {
+  fill: var(--ground);
+  stroke: var(--rule);
+  stroke-width: 1.5;
+}
+.diagram .accent rect {
+  stroke: var(--ai);
+}
+.diagram .strong rect {
+  stroke: var(--verified);
+  stroke-width: 2;
+}
+.diagram text {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.diagram text.small {
+  fill: var(--muted);
+  font-size: 9.5px;
+}
+.diagram .edge path {
+  stroke: var(--muted);
+  stroke-width: 1.2;
+  fill: none;
+}
+.diagram figcaption {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.prose .shot {
+  margin: 1.5rem 0;
+}
+.prose .shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.prose .shot figcaption {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: 0.4rem;
+}

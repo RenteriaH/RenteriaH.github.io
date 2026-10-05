@@ -15,7 +15,7 @@ const skills = cv.skills as Record<string, Txt>;
 
 interface Props {
   lang: Locale;
-  variant?: 'A' | 'B' | 'C' | 'D' | 'E';
+  variant?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 }
 const { lang, variant = 'A' } = Astro.props;
 const v = variants[variant];
@@ -39,7 +39,7 @@ const bare = (u: string) => u.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, 
   <section>
     <h2>{L.h.skills}</h2>
     <ul class="cv__skills">
-      {(v.skills as string[][]).map(([k, s]) => <li><strong>{skills[k][lang]}:</strong> {s}</li>)}
+      {(((lang === 'en' && (v as { skillsEn?: string[][] }).skillsEn) || v.skills) as string[][]).map(([k, s]) => <li><strong>{skills[k][lang]}:</strong> {s}</li>)}
     </ul>
   </section>
 

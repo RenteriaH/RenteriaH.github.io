@@ -225,6 +225,28 @@ export const variants = {
     maha: ['api', 'quality', 'data', 'front'],
     projects: ['ecomos', 'qce', 'portfolio'],
   },
+  F: {
+    slug: 'QA_Software_Tester',
+    headline: { es: 'Desarrollador de software · QA y pruebas', en: 'Software Developer · QA & Testing' },
+    summary: {
+      es: 'Desarrollador de software orientado a la calidad: automatizo pruebas de punta a punta con Playwright, valido APIs y datos, y verifico interfaces web en varios anchos de pantalla. En proyectos propios escribí pruebas que reproducen fallos antes de corregirlos y las ejecuto en CI. Reviso y verifico cada cambio, también el código escrito con agentes de IA.',
+      en: 'Quality-focused software developer: I automate end-to-end tests with Playwright, validate APIs and data, and check web interfaces across screen widths. In my own projects I wrote tests that reproduce bugs before fixing them and run them in CI. I review and verify every change, including code written with AI agents.',
+    },
+    skills: [
+      ['test', 'Playwright (e2e, regresión, varias resoluciones), Vitest, pytest, Lighthouse, Core Web Vitals'],
+      ['lang', 'JavaScript, TypeScript, Python, SQL, PHP'],
+      ['back', 'REST, GraphQL, validación de respuestas y datos'],
+      ['tools', 'Git, GitHub, GitHub Actions (CI), Linux, Claude Code, Codex'],
+    ],
+    skillsEn: [
+      ['test', 'Playwright (e2e, regression, multiple viewports), Vitest, pytest, Lighthouse, Core Web Vitals'],
+      ['lang', 'JavaScript, TypeScript, Python, SQL, PHP'],
+      ['back', 'REST, GraphQL, response and data validation'],
+      ['tools', 'Git, GitHub, GitHub Actions (CI), Linux, Claude Code, Codex'],
+    ],
+    maha: ['quality', 'api', 'front', 'data'],
+    projects: ['gymwarrior', 'portfolio', 'qce'],
+  },
 };
 
 export { links, t, maha, projects, skills };

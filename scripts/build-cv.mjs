@@ -8,7 +8,7 @@ import { join } from 'node:path';
 
 const CV = join(import.meta.dirname, '../../cv2026');
 const OUT = join(import.meta.dirname, '../public/cv');
-const variants = ['A_Software_Engineer', 'B_Full_Stack', 'C_Backend', 'D_Frontend_Web', 'E_Automation_Integrations'];
+const variants = ['A_Software_Engineer', 'B_Full_Stack', 'C_Backend', 'D_Frontend_Web', 'E_Automation_Integrations', 'F_QA_Software_Tester'];
 
 if (process.argv.includes('--build')) execFileSync('node', [join(CV, 'src/build.mjs')], { stdio: 'inherit' });
 

@@ -259,6 +259,29 @@ projects.splice(1, 0, {
   }),
 });
 projects.push({
+  id: 'spotify',
+  title: L_({ es: 'Cliente Android de Spotify', en: 'Spotify Android client' }),
+  oneLiner: L_({
+    es: 'App en Kotlin y Jetpack Compose que consume 28 endpoints de la Web API de Spotify, con OAuth y reproducción.',
+    en: 'Kotlin and Jetpack Compose app consuming 28 Spotify Web API endpoints, with OAuth and playback.',
+  }),
+  problem: L_({
+    es: 'Explorar el catálogo y la biblioteca de un usuario con un token que caduca, sin exponer credenciales.',
+    en: 'Browsing a user’s catalog and library with an expiring token, without exposing credentials.',
+  }),
+  solution: L_({
+    es: 'Servicios Retrofit, inyección con Hilt, renovación del token y credenciales fuera del código (local.properties).',
+    en: 'Retrofit services, Hilt injection, token refresh and credentials kept out of the code (local.properties).',
+  }),
+  role: L_({ es: 'Proyecto académico propio; saneado en 2026.', en: 'Own coursework project; hardened in 2026.' }),
+  status: L_({ es: 'Código público con instrucciones', en: 'Public code with instructions' }),
+  stack: ['Kotlin', 'Jetpack Compose', 'Retrofit', 'Hilt'],
+  evidence: ['academic'],
+  repo: 'https://github.com/RenteriaH/Spotify-API-Public',
+  public: true,
+  facts: L_({ es: [], en: [] }),
+});
+projects.push({
   id: 'racing',
   title: L_({ es: 'Simulador de carreras 2D', en: '2D racing simulator' }),
   oneLiner: L_({

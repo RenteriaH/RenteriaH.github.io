@@ -2,6 +2,7 @@
 // Las versiones solo cambian la selección y el orden; los hechos, cargos y fechas son los mismos.
 
 const links = {
+  email: 'renteg18@gmail.com',
   portfolio: { es: 'https://renteriah.github.io/', en: 'https://renteriah.github.io/en/' },
   github: 'https://github.com/RenteriaH',
   linkedin: 'https://www.linkedin.com/in/guillermo-renteria-9263052a6/',
@@ -16,6 +17,7 @@ const links = {
 const t = {
   es: {
     location: 'Torreón, Coahuila, México',
+    langs: ['Idiomas', 'Español (nativo) · Inglés (básico)'],
     h: { summary: 'Perfil', skills: 'Habilidades técnicas', exp: 'Experiencia', proj: 'Proyectos', edu: 'Educación' },
     job: {
       title: 'Desarrollador de software (Residencia profesional)',
@@ -24,12 +26,13 @@ const t = {
       period: 'jul 2026 – actualidad',
     },
     edu: [
-      ['Ingeniería en Sistemas Computacionales', 'Instituto Tecnológico de La Laguna', '2022 – en curso'],
+      ['Ingeniería en Sistemas Computacionales', 'Instituto Tecnológico de La Laguna', '2022 – dic 2026 (estimado)'],
       ['Bachillerato técnico en Electrónica', 'CECyTEC', '2021'],
     ],
   },
   en: {
     location: 'Torreón, Coahuila, Mexico',
+    langs: ['Languages', 'Spanish (native) · English (basic)'],
     h: { summary: 'Summary', skills: 'Technical Skills', exp: 'Experience', proj: 'Projects', edu: 'Education' },
     job: {
       title: 'Software Developer Intern (Professional Residency)',
@@ -38,7 +41,7 @@ const t = {
       period: 'Jul 2026 – Present',
     },
     edu: [
-      ['B.Eng. in Computer Systems Engineering', 'Instituto Tecnológico de La Laguna', '2022 – Present'],
+      ['B.Eng. in Computer Systems Engineering', 'Instituto Tecnológico de La Laguna', '2022 – Dec 2026 (expected)'],
       ['Technical High School Diploma in Electronics', 'CECyTEC', '2021'],
     ],
   },

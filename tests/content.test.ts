@@ -93,6 +93,8 @@ describe('honestidad sobre la autoría', () => {
   });
 
   it('la educación no declara un título obtenido', () => {
-    expect(education[0].period.es).toMatch(/en curso/);
+    // El egreso es una estimación: debe decirlo en ambos idiomas.
+    expect(education[0].period.es).toMatch(/estimado/);
+    expect(education[0].period.en).toMatch(/expected/);
   });
 });

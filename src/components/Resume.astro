@@ -29,7 +29,7 @@ const bare = (u: string) => u.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, 
     <p class="cv__name">Guillermo Rentería Hernández</p>
     <p class="cv__title">{v.headline[lang]}</p>
     <p class="cv__contact">
-      {L.location} · <a href={links.portfolio[lang]}>renteriah.github.io</a> · <a href={links.github}>{bare(links.github)}</a> ·
+      {L.location} · <a href={`mailto:${links.email}`}>{links.email}</a> · <a href={links.portfolio[lang]}>renteriah.github.io</a> · <a href={links.github}>{bare(links.github)}</a> ·
       <a href={links.linkedin}>{bare(links.linkedin)}</a>
     </p>
   </header>
@@ -75,6 +75,7 @@ const bare = (u: string) => u.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, 
   <section>
     <h2>{L.h.edu}</h2>
     {L.edu.map(([d, s, p]: string[]) => <div class="cv__row"><p><strong>{d}</strong> — {s}</p><span>{p}</span></div>)}
+    <p class="cv__langs"><strong>{L.langs[0]}:</strong> {L.langs[1]}</p>
   </section>
 </article>
 

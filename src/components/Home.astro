@@ -218,7 +218,7 @@ const cvPdf = es ? '/cv/Guillermo_Renteria_CV_ES.pdf' : '/cv/Guillermo_Renteria_
       <ul class="contact__list">
         {person.email && (
           <li>
-            <span class="mono muted">{es ? 'Correo' : 'Email'}</span> <span>{person.email}</span>
+            <span class="mono muted">{es ? 'Correo' : 'Email'}</span> <a href={`mailto:${person.email}`}>{person.email}</a>
           </li>
         )}
         <li><span class="mono muted">LinkedIn</span> <a href={person.linkedin} rel="me">{decodeURI(person.linkedin).replace('https://www.', '')}</a></li>

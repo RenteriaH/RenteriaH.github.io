@@ -20,8 +20,8 @@ export const person = {
   location: L_({ es: 'Torreón, Coahuila, México', en: 'Torreón, Coahuila, Mexico' }),
   github: 'https://github.com/RenteriaH',
   linkedin: 'https://www.linkedin.com/in/guillermo-renteria-9263052a6/',
-  /** PENDIENTE: correo profesional personal. No se usa el correo corporativo. */
-  email: null as string | null,
+  /** Correo público confirmado por Guillermo (2026-10-05). Nunca el corporativo. */
+  email: 'renteg18@gmail.com' as string | null,
 };
 
 function L_<T>(v: L<T>): L<T> {
@@ -352,8 +352,8 @@ export const education = [
   {
     school: 'Instituto Tecnológico de La Laguna',
     degree: L_({ es: 'Ingeniería en Sistemas Computacionales', en: 'B.Eng. in Computer Systems Engineering' }),
-    /** PENDIENTE: confirmar fecha de egreso (CV: 2026; LinkedIn: may 2027). */
-    period: L_({ es: '2022 – en curso', en: '2022 – present' }),
+    /** Egreso estimado dic 2026, pendiente de confirmación oficial. */
+    period: L_({ es: '2022 – dic 2026 (estimado)', en: '2022 – Dec 2026 (expected)' }),
   },
   {
     school: 'CECyTEC',
